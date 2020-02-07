@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotesActivity"
+    android:orientation="vertical"
+    android:background="@color/colorGrey">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/top_bar"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_centerVertical="true"
+            android:id="@+id/back_arrow"
+            android:paddingLeft="10dp"
+            android:clickable="true"
+            android:onClick="finish"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search note"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:layout_toRightOf="@+id/back_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:id="@+id/search_et"
+            android:layout_toLeftOf="@+id/search_icon"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:tint="@color/colorWhite"
+            android:id="@+id/search_icon"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="search"
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/notes_list"
+        android:layout_below="@+id/top_bar"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="50dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_add"
+        android:clickable="true"
+        android:onClick="add_note"/>
+
+</RelativeLayout>

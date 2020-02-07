@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddSubject"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_centerVertical="true"
+            android:id="@+id/back_arrow"
+            android:paddingLeft="10dp"
+            android:clickable="true"
+            android:onClick="finish"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD SUBJECTS"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/back_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter subject name"
+        android:id="@+id/subject_name"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_margin="20dp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="ADD"
+        android:textColor="@color/colorWhite"
+        android:clickable="true"
+        android:onClick="add_subject"
+        android:layout_margin="20dp"/>
+
+
+</LinearLayout>

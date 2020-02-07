@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddNoteActivity"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_centerVertical="true"
+            android:id="@+id/back_arrow"
+            android:paddingLeft="10dp"
+            android:clickable="true"
+            android:onClick="finish"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD NOTE"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/back_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="@color/colorGrey"
+        />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter title"
+            android:id="@+id/title_id"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notes data"
+            android:textColor="@color/colorGrey"
+            android:layout_marginTop="20dp"
+
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter text"
+            android:minHeight="150dp"
+            android:gravity="start"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:imeOptions="actionDone"
+            android:id="@+id/text_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add photo"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:onClick="add_image"
+            android:padding="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:id="@+id/selected_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Audio"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="add_audio"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 Audio selected"
+            android:textColor="@android:color/holo_blue_dark"
+            android:id="@+id/audio_selected_text"
+            android:visibility="invisible"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="ADD NOTE"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:onClick="add_note"/>
+
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
