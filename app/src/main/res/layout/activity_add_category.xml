@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddSubject"
+    tools:context=".AddCategory"
     >
 
     <RelativeLayout
@@ -56,7 +56,7 @@
         android:text="ADD"
         android:textColor="@color/colorWhite"
         android:clickable="true"
-        android:onClick="add_subject"
+        android:onClick="add_category"
         android:layout_margin="20dp"/>
 
 

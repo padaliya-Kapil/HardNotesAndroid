@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SUBJECTS"
+            android:text="Categories"
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
@@ -37,7 +37,7 @@
             android:paddingRight="20dp"
             android:tint="@color/colorWhite"
             android:clickable="true"
-            android:onClick="add_subject"/>
+            android:onClick="add_category"/>
 
     </RelativeLayout>
 
