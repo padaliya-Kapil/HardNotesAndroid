@@ -7,21 +7,21 @@
     android:background="@color/colorWhite"
     android:layout_margin="10dp"
     android:padding="10dp"
-    android:id="@+id/subject_layout"
+    android:id="@+id/category_layout"
     >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subject Name"
+        android:text="Category Name"
         android:textColor="@color/colorGrey"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subject"
-        android:id="@+id/subject_name"
+        android:text="Category"
+        android:id="@+id/category_name"
         android:textSize="20sp"
         android:textColor="@color/colorBlack"
         android:layout_marginTop="5dp"
