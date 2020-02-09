@@ -1,5 +1,6 @@
 package com.padaliya.hardnotes;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.padaliya.hardnotes.dataModel.Note;
@@ -30,9 +32,26 @@ public class ViewNotes extends AppCompatActivity {
 
     public void finish(View view)
     {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to update note ? ")
+                .setPositiveButton("Yes ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        update_note();
+                        finish();
 
-        // implement edit logic here
-        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle("XYZ");
+        alertDialog.show();
+
+
 
     }
 
@@ -127,7 +146,7 @@ public class ViewNotes extends AppCompatActivity {
     }
 
 
-    public void update_note(View view)
+    public void update_note()
     {
         int note_id = getIntent().getIntExtra("note_id" , 0);
 
@@ -158,7 +177,7 @@ public class ViewNotes extends AppCompatActivity {
         }
         else {
             db.updateNote( note_id ,title , date , text , photoPath , audioPath ,location , category_id );
-            Toast.makeText(ViewNotes.this , "Note added successfully" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(ViewNotes.this , "Note updated successfully" , Toast.LENGTH_SHORT).show();
             finish();
 
         }
