@@ -25,6 +25,8 @@
 
         <activity android:name=".AddNoteActivity"
             android:parentActivityName=".NotesActivity"></activity>
+
+        
     </application>
 
 </manifest>
