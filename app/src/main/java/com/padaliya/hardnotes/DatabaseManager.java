@@ -81,7 +81,7 @@ public class DatabaseManager {
     {
         List<Note> notes = new ArrayList<>();
 
-        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = '"+ category_id, null);
+        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = "+ category_id, null);
 
         if(c.moveToFirst()) {
 
@@ -108,11 +108,11 @@ public class DatabaseManager {
 
     }
 
-    public List<Note> searchNotes ( int subject_id , int user_id , String search)
+    public List<Note> searchNotes ( int subject_id , String search)
     {
         List<Note> notes = new ArrayList<>();
 
-        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = '"+ subject_id+"' and ( "+sqlHelper.TITLE+" LIKE '%"+search+"%' or "+sqlHelper.DESCRIPTION+" LIKE '%"+search+"%' )" , null);
+        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = "+ subject_id+" and ( "+sqlHelper.TITLE+" LIKE '%"+search+"%' or "+sqlHelper.DESCRIPTION+" LIKE '%"+search+"%' )" , null);
         if(c.moveToFirst()) {
 
             do {

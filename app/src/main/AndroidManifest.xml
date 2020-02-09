@@ -19,6 +19,12 @@
 
         <activity android:name=".AddCategory"
             android:parentActivityName=".MainActivity"></activity>
+
+        <activity android:name=".NotesActivity"
+            android:parentActivityName=".AddCategory"></activity>
+
+        <activity android:name=".AddNoteActivity"
+            android:parentActivityName=".NotesActivity"></activity>
     </application>
 
 </manifest>

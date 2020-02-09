@@ -14,14 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-
 import com.padaliya.hardnotes.dataModel.Category;
 
 import java.util.ArrayList;
 import java.util.List;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent i = new Intent(MainActivity.this , NotesActivity.class);
 
-                  //  i.putExtra("subject_id" , subject.SUBJECT_ID);
+                    i.putExtra("category_id" , category.CATEGORY_ID);
 
                     startActivity(i);
 
