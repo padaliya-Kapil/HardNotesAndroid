@@ -155,9 +155,14 @@ public class DatabaseManager {
 
     }
 
-    public void deleteNote (int note_id)
+    public void deleteNote (int note_id , int category_id)
     {
-        // TODO : implementation
+        database.delete(sqlHelper.NOTES_TABLE_NAME , "NOTES_ID = ?" +" and CATEGORY_ID = ?",
+                new String[] {
+                String.valueOf(note_id),
+                String.valueOf(category_id)
+                             });
+
     }
 
     public void deleteCategory (int category_id)

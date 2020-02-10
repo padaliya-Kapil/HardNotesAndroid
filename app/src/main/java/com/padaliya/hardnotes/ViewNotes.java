@@ -48,10 +48,8 @@ public class ViewNotes extends AppCompatActivity {
                     }
                 });
         AlertDialog alertDialog = builder.create();
-        alertDialog.setTitle("XYZ");
+        alertDialog.setTitle("Update?");
         alertDialog.show();
-
-
 
     }
 
