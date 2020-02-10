@@ -227,6 +227,8 @@ public void search(View view)
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
+                            loadData();
+
                         }
                     });
             AlertDialog alertDialog = builder.create();
