@@ -1,5 +1,6 @@
 package com.padaliya.hardnotes;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.padaliya.hardnotes.dataModel.Category;
+import com.padaliya.hardnotes.dataModel.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseManager db = new DatabaseManager(MainActivity.this);
         db.open();
         category_data = db.getCategories() ;
-        adapter = new Adapter() ;
 
+        adapter = new Adapter();
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(category_list);
         category_list.setAdapter(adapter);
+
 
 
     }
@@ -112,5 +118,86 @@ public class MainActivity extends AppCompatActivity {
             return category_data.size();
         }
         }
+
+
+    public void deleteCategory(final Category category )
+    {
+        final Boolean[] value = {false};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to delete category and associated notes? ")
+                .setPositiveButton("Yes ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        Log.d("Debug Notes Ac" , "Number of notes" +category_data.size() + "");
+
+                        int cat_Id = category.CATEGORY_ID ;
+
+                        DatabaseManager db = new DatabaseManager(MainActivity.this);
+                        db.open();
+
+                        db.deleteCategory(cat_Id);
+                        db.close();
+
+
+                        Log.d("Debug Notes Ac" ,"remove 1");
+                        Log.d("Debug Notes Ac" , "Number of notes" +category_data.size() + "");
+                        category_data.remove(category);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        loadData();
+
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setTitle("Are you sure?");
+        alertDialog.show();
+    }
+
+
+    public void loadData()
+    {
+
+        DatabaseManager db = new DatabaseManager(MainActivity.this);
+        db.open();
+
+        // get user id
+        category_data = db.getCategories();
+        db.close();
+
+
+        adapter = new Adapter();
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(category_list);
+        category_list.setAdapter(adapter);
+
+
+    }
+
+    // https://www.youtube.com/watch?v=M1XEqqo6Ktg
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback  = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
+    {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getLayoutPosition() ;
+            Category category = category_data.get(position) ;
+
+            Log.d("Debug Notes Ac" , "position" +position + "");
+
+            deleteCategory(category); ;
+
+
+//
+
+        }
+    };
     }
 

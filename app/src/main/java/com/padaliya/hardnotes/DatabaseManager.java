@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.padaliya.hardnotes.dataModel.Category;
 import com.padaliya.hardnotes.dataModel.Note;
@@ -167,7 +168,15 @@ public class DatabaseManager {
 
     public void deleteCategory (int category_id)
     {
-        // TODO : implementation
+        database.delete(sqlHelper.NOTES_TABLE_NAME , " CATEGORY_ID = ?",
+                new String[] {
+                        String.valueOf(category_id)
+                });
+        database.delete(sqlHelper.CATEGORY_TABLE_NAME , " CATEGORY_ID = ?",
+                new String[] {
+                        String.valueOf(category_id)
+                });
+
     }
 
 
