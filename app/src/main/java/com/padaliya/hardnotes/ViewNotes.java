@@ -2,9 +2,12 @@ package com.padaliya.hardnotes;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,8 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.padaliya.hardnotes.dataModel.Note;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class ViewNotes extends AppCompatActivity {
 
@@ -76,7 +82,31 @@ public class ViewNotes extends AppCompatActivity {
 
         if(!note.LOCATION.trim().equalsIgnoreCase(""))
         {
-            location.setText("Location on map");
+
+//            Log.d("View Notes",note.LOCATION) ;
+//            String[] latLong = note.LOCATION.split(",");
+//            Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
+//            List<Address> addresses = null;
+//
+//            try {
+//                addresses = gcd.getFromLocation(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]), 1);
+//
+//                    if (addresses.size() > 0) {
+//                location.setText(addresses.get(0).getAdminArea());
+//                    }
+//                    else {
+//                    location.setText("Location on map");
+//                    }
+//            } catch (IOException e) {
+//                Log.d("View Notes","IOEXception try stacktrace") ;
+//                location.setText("Location on map");
+//            } catch (Exception error)
+//            {
+//                location.setText("Location on map");
+//                Log.d("View Notes","Something else went wrong") ;
+//            }
+
+
             location.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 
             location.setOnClickListener(new View.OnClickListener() {
@@ -88,11 +118,6 @@ public class ViewNotes extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
-
-        else {
-
-            location.setText("Location not found");
         }
 
         ImageView photo = findViewById(R.id.selected_image);

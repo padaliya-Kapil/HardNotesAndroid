@@ -192,10 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("Debug Notes Ac" , "position" +position + "");
 
-            deleteCategory(category); ;
-
-
-//
+            deleteCategory(category);
 
         }
     };

@@ -1,9 +1,12 @@
 package com.padaliya.hardnotes;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +29,7 @@ import com.padaliya.hardnotes.dataModel.Note;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.BlockedNumberContract.BlockedNumbers.COLUMN_ID;
+
 
 
 public class NotesActivity extends AppCompatActivity {
@@ -47,7 +50,27 @@ public class NotesActivity extends AppCompatActivity {
         note_data = new ArrayList<>();
         note_list = findViewById(R.id.notes_list);
         note_list.setLayoutManager(new LinearLayoutManager(NotesActivity.this , RecyclerView.VERTICAL , false));
-}
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (shouldShowRequestPermissionRationale(
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    // Explain to the user why we need to read the contacts
+                }
+
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.ACCESS_FINE_LOCATION , Manifest.permission.ACCESS_COARSE_LOCATION},
+                        202);
+
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant
+
+                return;
+            }
+        }
+    }
 public void add_note(View view)
 {
 
