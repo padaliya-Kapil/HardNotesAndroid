@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
+
 public class ViewNotes extends AppCompatActivity {
+
+    Note note = null ;
 
 
     @Override
@@ -35,6 +40,9 @@ public class ViewNotes extends AppCompatActivity {
 
         getNote();
     }
+
+
+
 
     public void finish(View view)
     {
@@ -68,7 +76,7 @@ public class ViewNotes extends AppCompatActivity {
 
         db.open();
 
-        final Note note = db.getSingleNote(note_id);
+        note = db.getSingleNote(note_id);
 
         EditText title_et = findViewById(R.id.title_id);
 
@@ -76,37 +84,15 @@ public class ViewNotes extends AppCompatActivity {
 
         TextView date = findViewById(R.id.date);
 
-        TextView location = findViewById(R.id.location);
+        final TextView location = findViewById(R.id.location);
 
         date.setText("Created on : "+note.DATE);
 
         if(!note.LOCATION.trim().equalsIgnoreCase(""))
         {
 
-//            Log.d("View Notes",note.LOCATION) ;
-//            String[] latLong = note.LOCATION.split(",");
-//            Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
-//            List<Address> addresses = null;
-//
-//            try {
-//                addresses = gcd.getFromLocation(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]), 1);
-//
-//                    if (addresses.size() > 0) {
-//                location.setText(addresses.get(0).getAdminArea());
-//                    }
-//                    else {
-//                    location.setText("Location on map");
-//                    }
-//            } catch (IOException e) {
-//                Log.d("View Notes","IOEXception try stacktrace") ;
-//                location.setText("Location on map");
-//            } catch (Exception error)
-//            {
-//                location.setText("Location on map");
-//                Log.d("View Notes","Something else went wrong") ;
-//            }
-
-
+            updateLocation.run();
+            
             location.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 
             location.setOnClickListener(new View.OnClickListener() {
@@ -141,23 +127,6 @@ public class ViewNotes extends AppCompatActivity {
             playImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-
-//                    if(!audioPlaying)
-//                    {
-//
-//                        mediaPlayer.start();
-//
-//                        audioPlaying = true;
-//
-//                    }
-//
-//                    else {
-//
-//                        audioPlaying = false;
-//
-//                        mediaPlayer.stop();
-//                    }
 
 
 
@@ -206,4 +175,39 @@ public class ViewNotes extends AppCompatActivity {
         }
         db.close();
     }
+
+    Runnable updateLocation = new Runnable() {
+        @Override
+        public void run() {
+
+            final TextView location = findViewById(R.id.location);
+
+            Log.d("View Notes",note.LOCATION) ;
+            String[] latLong = note.LOCATION.split(",");
+            Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = null;
+
+            try {
+                addresses = gcd.getFromLocation(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]), 1);
+
+                if (addresses.size() > 0) {
+                    location.setText(addresses.get(0).getAdminArea() );
+                }
+                else {
+                    location.setText("Location on map");
+                }
+            } catch (IOException e) {
+
+                Log.d("View Notes","IOEXception try stacktrace") ;
+                location.setText("Location on map");
+
+            } catch (Exception error)
+            {
+
+                location.setText("Location on map");
+                Log.d("View Notes","Something else went wrong") ;
+
+            }
+}
+    };
 }

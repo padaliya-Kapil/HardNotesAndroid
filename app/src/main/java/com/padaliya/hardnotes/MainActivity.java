@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.padaliya.hardnotes.dataModel.Category;
-import com.padaliya.hardnotes.dataModel.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new Adapter();
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(category_list);
         category_list.setAdapter(adapter);
-
-
 
     }
 
@@ -169,11 +166,9 @@ public class MainActivity extends AppCompatActivity {
         category_data = db.getCategories();
         db.close();
 
-
         adapter = new Adapter();
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(category_list);
         category_list.setAdapter(adapter);
-
 
     }
 

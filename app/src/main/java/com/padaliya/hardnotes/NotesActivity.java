@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,16 +31,11 @@ import com.padaliya.hardnotes.dataModel.Note;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 public class NotesActivity extends AppCompatActivity {
 
     private RecyclerView note_list;
     private List<Note> note_data ;
     private Adapter adapter ;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +60,33 @@ public class NotesActivity extends AppCompatActivity {
 
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.ACCESS_FINE_LOCATION , Manifest.permission.ACCESS_COARSE_LOCATION},
                         202);
-
-                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-                // app-defined int constant
-
                 return;
             }
         }
+
+
+        EditText search_et = findViewById(R.id.search_et);
+        Log.d("Notes" ,"Hello");
+        search_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Log.d("Notes" ,"Hello");
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 public void add_note(View view)
 {
@@ -86,48 +103,32 @@ public void search(View view)
 {
     Log.d("Debug Notes Ac" ,"search ");
         EditText search_et = findViewById(R.id.search_et);
-
         String search = search_et.getText().toString().trim();
 
         if(!search.equalsIgnoreCase(""))
         {
+
             DatabaseManager db = new DatabaseManager(NotesActivity.this);
-
             db.open();
-
-
             int category_id = getIntent().getIntExtra("category_id" , 0);
-
             note_data = db.searchNotes(category_id , search);
-
             db.close();
 
             adapter = new Adapter();
             note_list.setAdapter(adapter);
-
         }
 
         else {
 
-
             DatabaseManager db = new DatabaseManager(NotesActivity.this);
-
             db.open();
-
             int category_id = getIntent().getIntExtra("category_id" , 0);
-
             note_data = db.getNotes(category_id );
-
             db.close();
 
             adapter = new Adapter();
-
             note_list.setAdapter(adapter);
-
         }
-
-
-
 
     }
 
@@ -284,6 +285,10 @@ public void search(View view)
         adapter = new Adapter();
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(note_list);
         note_list.setAdapter(adapter);
+
+
+
+
 
     }
 

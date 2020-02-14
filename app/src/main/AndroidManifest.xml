@@ -5,6 +5,16 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/file_provider" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,20 +33,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".AddCategory"
-            android:parentActivityName=".MainActivity"></activity>
-
-        <activity android:name=".NotesActivity"
-            android:parentActivityName=".AddCategory"></activity>
-
-        <activity android:name=".AddNoteActivity"
+        <activity
+            android:name=".AddCategory"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NotesActivity"
+            android:parentActivityName=".AddCategory" />
+        <activity
+            android:name=".AddNoteActivity"
+            android:parentActivityName=".NotesActivity" />
+        <activity
+            android:name=".ViewNotes"
             android:parentActivityName=".NotesActivity"></activity>
 
-        <activity android:name=".ViewNotes"
-            android:parentActivityName=".NotesActivity">
-
-        </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
     </application>
 
 </manifest>
