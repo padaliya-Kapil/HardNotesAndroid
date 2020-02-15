@@ -27,7 +27,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -38,8 +41,11 @@ public class AddNoteActivity extends AppCompatActivity {
     private static final int RECORD_AUDIO_CODE = 105;
 
     private Uri cameraPhotoURI = null;
+    private List<Uri> mUris = new ArrayList<>();
+    private Uri audioUri = null;
 
     private FusedLocationProviderClient fusedLocationClient;
+
 
     // https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient
 
@@ -74,7 +80,21 @@ public class AddNoteActivity extends AppCompatActivity {
     public void add_audio(View view)
     {
 
+        Intent pickIntent = new Intent();
+        pickIntent.setType("audio/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Intent recordIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        recordIntent.setType("audio/*") ;
+
+        Intent chooser = new Intent(Intent.ACTION_CHOOSER);
+        chooser.putExtra(Intent.EXTRA_INTENT, pickIntent);
+        chooser.putExtra(Intent.EXTRA_TITLE, "Record");
+        Intent[] intentarray= {recordIntent};
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS,intentarray);
+        startActivityForResult(chooser , RECORD_AUDIO_CODE);
     }
+
 
     public void add_image(View view)
     {
@@ -99,6 +119,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     photoFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPhotoURI);
 
+            mUris.add(cameraPhotoURI) ;
         }
 
 
@@ -123,52 +144,63 @@ public class AddNoteActivity extends AppCompatActivity {
                 if (cameraPhotoURI != null) {
 
                     Log.d("Add note"  , "131");
-                    ImageView imageView = findViewById(R.id.selected_image);
 
                   LinearLayout linearLayout1 =  findViewById(R.id.add_view_images);
-                  linearLayout1.setBackgroundColor(Color.BLUE);
+
                   ImageView image = new ImageView(AddNoteActivity.this);
 
                   image.setImageURI(cameraPhotoURI);
                   linearLayout1.addView(image);
+                    TextView tv = new TextView(this);
+                    tv.setHeight(20);
+                    linearLayout1.addView(tv);
+
 
                 }
             } else {
 
-                ImageView imageView = findViewById(R.id.selected_image);
+
 
                 System.out.println("camera photo uri : " + cameraPhotoURI);
                 Log.d("Add note"  , "aaya kya??");
-                imageView.setImageURI(cameraPhotoURI);
 
                 LinearLayout linearLayout1 =  findViewById(R.id.add_view_images);
-                linearLayout1.setBackgroundColor(Color.BLUE);
-                ImageView image = new ImageView(AddNoteActivity.this);
 
-                image.setImageURI(cameraPhotoURI);
-                linearLayout1.addView(image);
-                
+                for(int i = 0 ; i < mUris.size() ; i ++)
+                {
+                    ImageView image = new ImageView(AddNoteActivity.this);
+                    image.setImageURI(mUris.get(0));
+                    linearLayout1.addView(image);
+                    TextView tv = new TextView(this);
+                    tv.setHeight(20);
+                    linearLayout1.addView(tv);
+
+                }
+
+
             }
 
         }
 
-//        if(requestCode == RECORD_AUDIO_CODE && resultCode == RESULT_OK)
-//        {
-//            audioUri = data.getData();
-//
-//            System.out.println("audio uri : " + audioUri);
-//
-//            TextView audio_selected = findViewById(R.id.audio_selected_text);
-//
-//            audio_selected.setVisibility(View.VISIBLE);
-//
-//        }
+        if(requestCode == RECORD_AUDIO_CODE && resultCode == RESULT_OK)
+        {
+            audioUri = data.getData();
+
+            System.out.println("audio uri : " + audioUri);
+
+            TextView audio_selected = findViewById(R.id.audio_selected_text);
+
+            audio_selected.setVisibility(View.VISIBLE);
+
+        }
     }
 
 
 
     public void add_note(View view)
     {
+        Random random = new Random() ;
+        int id = random.nextInt(9999999);
 
         EditText title_et = findViewById(R.id.title_id);
         EditText text_et = findViewById(R.id.text_id);
@@ -176,13 +208,12 @@ public class AddNoteActivity extends AppCompatActivity {
         String text = text_et.getText().toString().trim();
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date()) ;
         int category_id = getIntent().getIntExtra("category_id" , 0);
-        String photoPath = "";
         String audioPath = "";
 
-        if(cameraPhotoURI != null)
-        {
-            photoPath =  cameraPhotoURI.toString();
-        }
+        DatabaseManager db = new DatabaseManager(AddNoteActivity.this);
+        db.open();
+
+
 
         if(title.equalsIgnoreCase("") && text.equalsIgnoreCase(""))
         {
@@ -190,15 +221,19 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         else {
+            for(int i = 0 ; i < mUris.size() ; i ++) {
 
-            DatabaseManager db = new DatabaseManager(AddNoteActivity.this);
-            db.open();
-            db.insertNote(title , date , text , photoPath , audioPath ,userLocation , category_id );
-            db.close();
+                if (mUris.get(i) != null) {
+                    db.insertImage( mUris.get(i).toString() , id, category_id );
+                }
+            }
+
+            db.insertNote(id ,title , date , text ,  audioPath ,userLocation , category_id ) ;
             Toast.makeText(AddNoteActivity.this , "Note added successfully" , Toast.LENGTH_SHORT).show();
-            finish();
-
         }
+
+        db.close();
+        finish();
 
     }
 
@@ -217,6 +252,4 @@ public class AddNoteActivity extends AppCompatActivity {
         String z = image.getAbsolutePath();
         return image;
     }
-
-
 }

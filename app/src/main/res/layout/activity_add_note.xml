@@ -35,14 +35,21 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"/>
 
+        <Button
+            android:id="@+id/addImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_camera"
+            android:onClick="add_image" />
+
 
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
 
 
     <LinearLayout
@@ -92,14 +99,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add photo"
             android:layout_marginTop="10dp"
             android:clickable="true"
-            android:onClick="add_image"
+            android:onClick="add_audio"
             android:padding="10dp"
-            />
+            android:text="Add Audio" />
 
-        <HorizontalScrollView
+        <TextView
+            android:id="@+id/audio_selected_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 Audio selected"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="invisible" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -107,31 +121,8 @@
                 android:id="@+id/add_view_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:id="@+id/selected_image" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Audio"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:clickable="true"
-            android:onClick="add_audio"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 Audio selected"
-            android:textColor="@android:color/holo_blue_dark"
-            android:id="@+id/audio_selected_text"
-            android:visibility="invisible"/>
+                android:orientation="vertical" />
+        </ScrollView>
 
 
         <Button

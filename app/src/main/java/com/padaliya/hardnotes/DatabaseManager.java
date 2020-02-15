@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.padaliya.hardnotes.dataModel.Category;
+import com.padaliya.hardnotes.dataModel.Image;
 import com.padaliya.hardnotes.dataModel.Note;
 
 import java.util.ArrayList;
@@ -62,14 +63,14 @@ public class DatabaseManager {
         return categories;
     }
 
-    public void insertNote( String title , String date , String  text , String photo , String audio , String location , int category_id )
+    public void insertNote( int note_id ,String title , String date , String  text , String audio , String location , int category_id )
     {
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put(sqlHelper.NOTES_ID, note_id) ;
         contentValues.put(sqlHelper.TITLE , title);
         contentValues.put(sqlHelper.DATE , date);
         contentValues.put(sqlHelper.DESCRIPTION , text);
-        contentValues.put(sqlHelper.PHOTO , photo);
         contentValues.put(sqlHelper.AUDIO , audio);
         contentValues.put(sqlHelper.LOCATION , location);
         contentValues.put(sqlHelper.NOTES_CATEGORY_ID , category_id);
@@ -94,10 +95,9 @@ public class DatabaseManager {
                 note.TITLE = c.getString(1);
                 note.DATE = c.getString(2);
                 note.DESCRIPTION = c.getString(3);
-                note.PHOTO = c.getString(4);
-                note.AUDIO = c.getString(5);
-                note.LOCATION = c.getString(6);
-                note.CATEGORY_ID = c.getInt(7);
+                note.AUDIO = c.getString(4);
+                note.LOCATION = c.getString(5);
+                note.CATEGORY_ID = c.getInt(6);
 
                 notes.add(note);
 
@@ -122,10 +122,9 @@ public class DatabaseManager {
                 note.TITLE = c.getString(1);
                 note.DATE = c.getString(2);
                 note.DESCRIPTION = c.getString(3);
-                note.PHOTO = c.getString(4);
-                note.AUDIO = c.getString(5);
-                note.LOCATION = c.getString(6);
-                note.CATEGORY_ID = c.getInt(7);
+                note.AUDIO = c.getString(4);
+                note.LOCATION = c.getString(5);
+                note.CATEGORY_ID = c.getInt(6);
                 notes.add(note);
 
             } while (c.moveToNext());
@@ -145,10 +144,9 @@ public class DatabaseManager {
             note.TITLE = c.getString(1);
             note.DATE = c.getString(2);
             note.DESCRIPTION = c.getString(3);
-            note.PHOTO = c.getString(4);
-            note.AUDIO = c.getString(5);
-            note.LOCATION = c.getString(6);
-            note.CATEGORY_ID = c.getInt(7);
+            note.AUDIO = c.getString(4);
+            note.LOCATION = c.getString(5);
+            note.CATEGORY_ID = c.getInt(6);
             return note;
         }
 
@@ -158,6 +156,11 @@ public class DatabaseManager {
 
     public void deleteNote (int note_id , int category_id)
     {
+        database.delete(sqlHelper.NOTES_TABLE_IMAGES , "NOTES_ID = ?" +" and CATEGORY_ID = ?",
+                new String[] {
+                        String.valueOf(note_id),
+                        String.valueOf(category_id)
+                });
         database.delete(sqlHelper.NOTES_TABLE_NAME , "NOTES_ID = ?" +" and CATEGORY_ID = ?",
                 new String[] {
                 String.valueOf(note_id),
@@ -168,6 +171,10 @@ public class DatabaseManager {
 
     public void deleteCategory (int category_id)
     {
+        database.delete(sqlHelper.NOTES_TABLE_IMAGES , " CATEGORY_ID = ?",
+                new String[] {
+                        String.valueOf(category_id)
+                });
         database.delete(sqlHelper.NOTES_TABLE_NAME , " CATEGORY_ID = ?",
                 new String[] {
                         String.valueOf(category_id)
@@ -180,7 +187,7 @@ public class DatabaseManager {
     }
 
 
-    public void updateNote( int note_id  , String title , String date , String  text , String photo , String audio , String location , int category_id )
+    public void updateNote( int note_id  , String title , String date , String  text ,  String audio , String location , int category_id )
     {
 
         ContentValues contentValues = new ContentValues();
@@ -188,7 +195,7 @@ public class DatabaseManager {
         contentValues.put(sqlHelper.TITLE , title);
         contentValues.put(sqlHelper.DATE , date);
         contentValues.put(sqlHelper.DESCRIPTION , text);
-        contentValues.put(sqlHelper.PHOTO , photo);
+
         contentValues.put(sqlHelper.AUDIO , audio);
         contentValues.put(sqlHelper.LOCATION , location);
         contentValues.put(sqlHelper.NOTES_CATEGORY_ID , category_id);
@@ -197,7 +204,52 @@ public class DatabaseManager {
                 String.valueOf(note_id)
         }) ;
 
+    }
 
+    public void insertImage( String image ,int notes_id , int category_id )
+    {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(sqlHelper.IMAGE , image);
+        contentValues.put(sqlHelper.NOTES_ID , notes_id);
+        contentValues.put(sqlHelper.NOTES_CATEGORY_ID , category_id);
+
+        database.insert(sqlHelper.NOTES_TABLE_IMAGES , null , contentValues);
 
     }
+
+    public List<Image> getImages (int note_id , int category_id)
+    {
+        List<Image> images = new ArrayList<>();
+
+        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_IMAGES+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = "+ category_id + " and " +sqlHelper.NOTES_IMAGE_ID + "=" + note_id, null);
+
+        if(c.moveToFirst()) {
+
+            do {
+
+                Image image = new Image();
+                image.IMAGE = c.getString(0);
+
+                images.add(image);
+
+            } while (c.moveToNext());
+
+        }
+
+        return images;
+
+    }
+
+//    public void deleteImage( int image_id ,int notes_id , int category_id )
+//    {
+//
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(sqlHelper.IMAGE , image);
+//        contentValues.put(sqlHelper.NOTES_ID , notes_id);
+//        contentValues.put(sqlHelper.NOTES_CATEGORY_ID , category_id);
+//
+//        database.insert(sqlHelper.NOTES_TABLE_IMAGES , null , contentValues);
+//
+//    }
 }

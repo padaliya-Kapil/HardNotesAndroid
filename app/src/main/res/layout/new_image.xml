@@ -2,6 +2,7 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="225dp"
     android:id="@+id/newImage"
+
     android:layout_height="400dp">
 
 </ImageView>

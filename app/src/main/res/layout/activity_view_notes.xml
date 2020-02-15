@@ -35,6 +35,15 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"/>
 
+        <Button
+            android:id="@+id/addImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_camera"
+            android:onClick="add_image" />
+
 
     </RelativeLayout>
 
@@ -115,18 +124,21 @@
 
             </RelativeLayout>
 
-            <TextView
+            <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Photo"
-                android:layout_marginTop="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/viewImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                />
+                </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:id="@+id/selected_image" />
+
+            </ScrollView>
+
 
             <TextView
                 android:layout_width="wrap_content"

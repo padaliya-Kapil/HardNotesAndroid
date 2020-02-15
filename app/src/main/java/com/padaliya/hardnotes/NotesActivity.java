@@ -3,9 +3,9 @@ package com.padaliya.hardnotes;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
