@@ -196,7 +196,7 @@ public class AddNoteActivity extends AppCompatActivity {
         EditText text_et = findViewById(R.id.text_id);
         String title = title_et.getText().toString().trim();
         String text = text_et.getText().toString().trim();
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date());
         int category_id = getIntent().getIntExtra("category_id", 0);
         String audioPath = "";
 

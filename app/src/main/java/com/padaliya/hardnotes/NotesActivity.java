@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import android.content.pm.PackageManager;
 
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -287,9 +289,6 @@ public void search(View view)
         note_list.setAdapter(adapter);
 
 
-
-
-
     }
 
     public void loadData()
@@ -310,5 +309,35 @@ public void search(View view)
         note_list.setAdapter(adapter);
 
 
+    }
+
+    public void sortByAlphabet(View view)
+    {
+        DatabaseManager db = new DatabaseManager(NotesActivity.this);
+        db.open();
+
+        int category_id = getIntent().getIntExtra("category_id" , 0);
+        note_data = db.getSortedNotes(category_id , SQLLiteDatabaseHelper.TITLE);
+        db.close();
+
+        db.close();
+
+        adapter.notifyDataSetChanged();
+
+    }
+    public void sortByTime(View view)
+    {
+
+        DatabaseManager db = new DatabaseManager(NotesActivity.this);
+        db.open();
+
+        int category_id = getIntent().getIntExtra("category_id" , 0);
+        note_data = db.getSortedNotes(category_id , SQLLiteDatabaseHelper.DATE);
+
+        db.close();
+
+        db.close();
+
+        adapter.notifyDataSetChanged();
     }
 }

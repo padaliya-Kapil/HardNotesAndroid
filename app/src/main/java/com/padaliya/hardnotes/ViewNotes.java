@@ -240,9 +240,7 @@ public class ViewNotes extends AppCompatActivity {
     Runnable updateLocation = new Runnable() {
         @Override
         public void run() {
-
             final TextView location = findViewById(R.id.location);
-
             Log.d("View Notes",note.LOCATION) ;
             String[] latLong = note.LOCATION.split(",");
             Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -375,5 +373,10 @@ public class ViewNotes extends AppCompatActivity {
 
 
         }
+
+
     }
+
+
+
 }

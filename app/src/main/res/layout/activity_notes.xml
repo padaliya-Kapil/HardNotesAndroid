@@ -56,9 +56,10 @@
             android:id="@+id/sortImage"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:clickable="true"
-
             android:layout_toLeftOf="@id/search_icon"
+
+            android:clickable="true"
+            android:onClick="sortByTime"
             app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
         <TextView
@@ -66,8 +67,9 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_toLeftOf="@id/sortImage"
-            android:gravity="center"
             android:clickable="true"
+            android:gravity="center"
+            android:onClick="sortByAlphabet"
             android:text="A-Z" />
 
     </RelativeLayout>

@@ -82,15 +82,12 @@ public class DatabaseManager {
     public List<Note> getNotes (int category_id)
     {
         List<Note> notes = new ArrayList<>();
-
         Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = "+ category_id, null);
-
         if(c.moveToFirst()) {
 
             do {
 
                 Note note = new Note();
-
                 note.NOTE_ID = c.getInt(0);
                 note.TITLE = c.getString(1);
                 note.DATE = c.getString(2);
@@ -100,13 +97,9 @@ public class DatabaseManager {
                 note.CATEGORY_ID = c.getInt(6);
 
                 notes.add(note);
-
             } while (c.moveToNext());
-
         }
-
         return notes;
-
     }
 
     public List<Note> searchNotes ( int subject_id , String search)
@@ -241,15 +234,26 @@ public class DatabaseManager {
 
     }
 
-//    public void deleteImage( int image_id ,int notes_id , int category_id )
-//    {
-//
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(sqlHelper.IMAGE , image);
-//        contentValues.put(sqlHelper.NOTES_ID , notes_id);
-//        contentValues.put(sqlHelper.NOTES_CATEGORY_ID , category_id);
-//
-//        database.insert(sqlHelper.NOTES_TABLE_IMAGES , null , contentValues);
-//
-//    }
+    public List<Note> getSortedNotes (int category_id , String sortOrder )
+    {
+        List<Note> notes = new ArrayList<>();
+        Cursor c = database.rawQuery("SELECT * FROM "+sqlHelper.NOTES_TABLE_NAME+" WHERE "+sqlHelper.NOTES_CATEGORY_ID+" = "+ category_id + " order by " + sortOrder, null);
+        if(c.moveToFirst()) {
+
+            do {
+
+                Note note = new Note();
+                note.NOTE_ID = c.getInt(0);
+                note.TITLE = c.getString(1);
+                note.DATE = c.getString(2);
+                note.DESCRIPTION = c.getString(3);
+                note.AUDIO = c.getString(4);
+                note.LOCATION = c.getString(5);
+                note.CATEGORY_ID = c.getInt(6);
+
+                notes.add(note);
+            } while (c.moveToNext());
+        }
+        return notes;
+    }
 }
