@@ -52,6 +52,24 @@
             android:onClick="search"
             />
 
+        <ImageView
+            android:id="@+id/sortImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+
+            android:layout_toLeftOf="@id/search_icon"
+            app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
+
+        <TextView
+            android:id="@+id/alphaSortImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@id/sortImage"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="A-Z" />
+
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

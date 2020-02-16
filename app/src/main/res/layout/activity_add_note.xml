@@ -96,22 +96,23 @@
             android:imeOptions="actionDone"
             android:id="@+id/text_id"/>
 
-        <TextView
+
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:onClick="add_audio"
+            android:onClick="record_audio"
             android:padding="10dp"
-            android:text="Add Audio" />
+            android:text="Record Audio" />
 
         <TextView
-            android:id="@+id/audio_selected_text"
-            android:layout_width="wrap_content"
+            android:id="@+id/audio_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1 Audio selected"
             android:textColor="@android:color/holo_blue_dark"
-            android:visibility="invisible" />
+            />
+
 
         <ScrollView
             android:layout_width="match_parent"

@@ -43,6 +43,7 @@ public class ViewNotes extends AppCompatActivity {
     private Uri cameraPhotoURI = null;
     private List<Uri> mUris = new ArrayList<>();
     private Uri audioUri = null;
+    private Boolean audioPlaying = false;
 
     Note note = null ;
 
@@ -151,23 +152,47 @@ public class ViewNotes extends AppCompatActivity {
         }
 
 
-//        if(!note.AUDIO.equalsIgnoreCase(""))
-//        {
-//            ImageView playImage = findViewById(R.id.play_audio);
-//
-//            playImage.setVisibility(View.VISIBLE);
-//
-//            final MediaPlayer mediaPlayer = MediaPlayer.create(this, Uri.parse(note.AUDIO));
-//
-//            playImage.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//
-//
-//                }
-//            });
-//        }
+        if(!note.AUDIO.equalsIgnoreCase(""))
+        {
+            Log.d("View Note" , "157") ;
+            ImageView playImage = findViewById(R.id.play_audio);
+
+            playImage.setVisibility(View.VISIBLE);
+
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, Uri.parse(note.AUDIO));
+
+            playImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    if(!audioPlaying)
+                    {
+                        Log.d("View Note" , audioPlaying.toString()) ;
+                        Log.d("View Note" , note.AUDIO) ;
+
+                        mediaPlayer.start();
+
+                        audioPlaying = true;
+                        Log.d("View Note" , audioPlaying.toString()) ;
+
+
+                    }
+
+                    else {
+
+                        Log.d("View Note" , audioPlaying.toString()) ;
+                        audioPlaying = false;
+
+                        mediaPlayer.stop();
+                        Log.d("View Note" , audioPlaying.toString()) ;
+                    }
+
+
+
+                }
+            });
+        }
 
 
     }
@@ -195,7 +220,7 @@ public class ViewNotes extends AppCompatActivity {
         String date = oldNote.DATE;                 // date will not be updated
         int category_id = oldNote.CATEGORY_ID;      // category will not be updated as of now
 
-        String audioPath = "";                      // TODO
+        String audioPath = "";                      // done
 
 
 
@@ -342,10 +367,7 @@ public class ViewNotes extends AppCompatActivity {
 
                 }
 
-
             }
-
-
             DatabaseManager db = new DatabaseManager(this);
             db.open();
             db.insertImage( cameraPhotoURI.toString() , note.NOTE_ID, note.CATEGORY_ID );
